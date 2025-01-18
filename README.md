@@ -99,15 +99,28 @@ e.g. http://10.2.1.213:9001
 
 You can login with the credentials from /etc/default/minio 
 
-#################3
-#
-# mc CLI
-#
+![Minio Login screen](pictures/Minio-login.png)
 
-$ curl https://dl.min.io/client/mc/release/linux-arm64/mc -o mc
-$ chmod +x mc
-$ ./mc
-$ sudo mv mc /usr/local/bin/
+
+# Minio CLI
+
+Minio also has a Commandline Interface that needs to be installed on the Server and the Klipper Device (your printer).
+
+### Ratos
+There is no binary image for a 32 Bit Linux used by Ratrig Ratos. I made a 32 Bit Version; crosscompiled. But i am not sure
+if i am allowed to upload it.
+
+### Linux
+
+As i am using a Rasberry PI5 for my Server and a PI4 for my printer, the installation is exactly the same.
+You can find the mc on Github https://github.com/minio/mc 
+
+* **Step 1:** Install CLI
+```shell
+curl https://dl.min.io/client/mc/release/linux-arm64/mc -o mc
+chmod +x mc
+sudo mv mc /usr/local/bin/
+```
 
 $ mc alias set local http://localhost:9000 hergen 'Ganz-sicheres-Password'
 Added `local` successfully.
