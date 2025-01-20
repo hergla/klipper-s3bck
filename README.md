@@ -210,7 +210,8 @@ Total: 6.87 MiB, Transferred: 6.87 MiB, Speed: 22.15 MiB/s
 
 # Restore 
 
-You can launch the Web Interface and click on the *Object Browser*. 
+You can launch the Web Interface and click on the *Object Browser*. Select a folder or file and then use the download action. 
+I prefer not to download directly to the printer. You can do if you like to. Use the mc cli command ...
 
-
+![Minio Object Browser](pictures/Minio-Browser.png)
 
