@@ -28,7 +28,7 @@ pi@minio:~ $ cat /etc/default/minio
 # Omit to use the default values 'minioadmin:minioadmin'.
 # MinIO recommends setting non-default values as a best practice, regardless of environment
 
-MINIO_ROOT_USER=minioadmin
+MINIO_ROOT_USER=superadmin
 MINIO_ROOT_PASSWORD='Ganz-sicheres-Password'
 
 # MINIO_VOLUMES sets the storage volume or path to use for the MinIO server.
@@ -107,8 +107,7 @@ You can login with the credentials from /etc/default/minio
 Minio also has a Commandline Interface that needs to be installed on the Server and the Klipper Device (your printer).
 
 ### Ratos
-There is no binary image for a 32 Bit Linux used by Ratrig Ratos. I made a 32 Bit Version; crosscompiled. But i am not sure
-if i am allowed to upload it.
+There is no binary image for a 32 Bit Linux used by Ratrig Ratos. I made a 32 Bit Version; crosscompiled. I do not know if it is allowed to provide a binary version of the software here.
 
 ### Linux
 
@@ -116,28 +115,73 @@ As i am using a Rasberry PI5 for my Server and a PI4 for my printer, the install
 You can find the mc on Github https://github.com/minio/mc 
 
 * **Step 1:** Install CLI
+
+Install the Minio CLI on Server and Printer.
 ```shell
 curl https://dl.min.io/client/mc/release/linux-arm64/mc -o mc
 chmod +x mc
 sudo mv mc /usr/local/bin/
 ```
 
-$ mc alias set local http://localhost:9000 hergen 'Ganz-sicheres-Password'
-Added `local` successfully.
+# Create Minio Backup User and Bucket
 
-$ mc alias set minio http://localhost:9000 hergen 'Ganz-sicheres-Password'
-Added `minio` successfully.
+Now we need to create a backup user inside our Minio Server. The Bucket we create holds the buckup objets. We will use the user and bucket later on. Please note down both.
 
-####################
+* **Step 1:** Create alias for the superadmin
+
+On the Minio Server lets create an alias for the admin account from /etc/default/minio.
+
+```shell
+$ mc alias set local http://localhost:9000 superadmin 'Ganz-sicheres-Password'
+```
+
+* **Step 2:** Create backup user.
+
+We create a user we will use for backup.
+You can also use the Web GUI, but we will use the CLI here. Use a strong password please.
+
+```shell
+read -p "Passord: " password
+mc admin user add local backup $password
+mc admin policy attach local readwrite --user backup
 #
-# User in Minio anlegen ueber GUI
-# 
-User: backup Password: backup123
+mc alias set srvbackup http://localhost:9000 backup $password
+```
 
-#
-# Bucket anlegen:
-# 
+* **Step 3:** Create bucket.
+Lets create a bucket that holds the backup objects. I named the bucket **klipperbackups**.
+We use the alias we created in the previous step.
 
-$ mc mb --with-lock backup/klipperbackups
-Bucket created successfully `backup/klipperbackups`.
+```shell
+$ mc mb --with-lock srvbackup/klipperbackups
+```
+
+# Setup on printer
+
+Hopefully you allready installed the Minio CLI on your printer. If not please doit now.
+What we need for setting up the our printer is:
+
+* Name (FQDN) or IP of the Minio Server. ( I named mine it minio.localdomain )
+* Minio user and password
+* Bucketname
+
+Create an alias. 
+
+```shell
+read -p "Minio Server: " server
+read -p "Minio Username: " username
+read -p "Minio Passwor: " password 
+mc alias set srvbackup http://${server}:9000 $username $password
+```
+
+Lets check if we can see our bucket. 
+      
+```
+pi@voron:~ $ mc ls srvbackup
+[2025-01-15 16:12:52 CET]     0B klipperbackups/
+```
+
+
+
+
 
