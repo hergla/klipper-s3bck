@@ -204,8 +204,13 @@ pi@voron:~/klipper-s3bck $ ./s3bck.sh
 `/home/pi/printer_data/config/.moonraker.conf.bkp` -> `srvminio/klipperbackups/voron/20250120-132013/home/pi/printer_data/config/.moonraker.conf.bkp`
 `/home/pi/printer_data/config/KlipperScreen.conf` -> `srvminio/klipperbackups/voron/20250120-132013/home/pi/printer_data/config/KlipperScreen.conf`
 ...
+Total: 6.87 MiB, Transferred: 6.87 MiB, Speed: 22.15 MiB/s
 ```
 
+
+# Restore 
+
+You can launch the Web Interface and click on the *Object Browser*. 
 
 
 
