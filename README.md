@@ -1,7 +1,8 @@
 # klipper-s3bck
+
 Backup Klipper to S3 Storage like Minio.
 
-This README needs to be completed...
+You need a dedicated linux server as the backup server. You can use a raspberry pi for it.
 
 
 # Minio Install and Config
