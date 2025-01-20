@@ -13,6 +13,6 @@ if [ -z $RETENTION_MODE ]; then RETENTION_MODE=governance; fi
 for i in "${!folders[@]}"
 do
   echo "$i=>${folders[i]}"
-  mc cp -q --dp --retention-mode $RETENTION_MODE --retention-duration $RETENTION_DURATION -r ${folders[i]}/ ${MC_ALIAS}/${BUCKET}/${SYS_NAME}/${DT}/${folders[i]}
+  mc cp -q --dp --retention-mode $RETENTION_MODE --retention-duration $RETENTION_DURATION -r ${folders[i]}/ ${MC_ALIAS}/${BUCKET}/${SYS_NAME}/${DT}${folders[i]}
   mc rm  --older-than ${KEEP_BACKUPS}d ${folders[i]} ${MC_ALIAS}/${BUCKET}/${SYS_NAME}
 done
