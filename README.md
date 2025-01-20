@@ -165,7 +165,7 @@ What we need for setting up the our printer is:
 * Minio user and password
 * Bucketname
 
-Create an alias. 
+## Create an alias. 
 
 ```shell
 read -p "Minio Server: " server
@@ -174,13 +174,37 @@ read -p "Minio Passwor: " password
 mc alias set srvbackup http://${server}:9000 $username $password
 ```
 
-Lets check if we can see our bucket. 
+## Lets check if we can see our bucket. 
       
 ```
 pi@voron:~ $ mc ls srvbackup
 [2025-01-15 16:12:52 CET]     0B klipperbackups/
 ```
 
+## Clone from github.
+
+```shell
+cd
+git clone https://github.com/hergla/klipper-s3bck.git
+cd klipper-s3bck
+```
+
+## Edit the config file
+
+There is a configfile called *.config* that needs to be edited. 
+Use vi or nano to adapt to your own needs.
+
+## Lets do a backup
+When everthing is setup correctly, we are ready to start a backup
+You can simply start it by running *s3back.sh* from the *klipper-s3bck* folder.
+
+```
+pi@voron:~/klipper-s3bck $ ./s3bck.sh
+0=>/home/pi/printer_data/config
+`/home/pi/printer_data/config/.moonraker.conf.bkp` -> `srvminio/klipperbackups/voron/20250120-132013/home/pi/printer_data/config/.moonraker.conf.bkp`
+`/home/pi/printer_data/config/KlipperScreen.conf` -> `srvminio/klipperbackups/voron/20250120-132013/home/pi/printer_data/config/KlipperScreen.conf`
+...
+```
 
 
 
