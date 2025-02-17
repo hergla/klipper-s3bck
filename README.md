@@ -171,7 +171,7 @@ What we need for setting up the our printer is:
 ```shell
 read -p "Minio Server: " server
 read -p "Minio Username: " username
-read -p "Minio Passwor: " password 
+read -p "Minio Password: " password 
 mc alias set srvbackup http://${server}:9000 $username $password
 ```
 
